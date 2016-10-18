@@ -28,13 +28,4 @@ class Routes {
 		$uri = trim($uri, '/');
 		return $uri;
 	}
-
-	function getUriByIndex($index) {
-		$basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/';
-		$uri = substr($_SERVER['REQUEST_URI'], strlen($basepath));
-		if (strstr($uri, '?')) $uri = substr($uri, 0, strpos($uri, '?'));
-		$uri = trim($uri, '/');
-		$uri = explode("/",$uri);
-		return $uri[$index];
-	}
 }
