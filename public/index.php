@@ -2,8 +2,10 @@
 
 //ROUTING-----
 $route = new Routes();
-//echo $uri;
+$uri = $route->getLastUri();
+echo $uri;
 $viewFile = $route->getView($route->getCurrentUri());
+echo $viewFile;
 //------------------
 ?>
 
