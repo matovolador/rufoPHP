@@ -1,4 +1,4 @@
-<?php include_once ("../../_config.php"); ?>
+<?php include ("../../_config.php"); ?>
 <div class="panel-body">
 	<h3>Sign Up</h3>
 	<form id="form" action="<?php echo SITE_URL ?>actions/register.php" method="post">
@@ -14,7 +14,7 @@
 			<label for="password">Password</label>
 			<input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
 		</div>
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" class="btn btn-primary">Sign Up</button>
 	</form>
 	<script type="text/javascript">
 		$("#form").validate();
