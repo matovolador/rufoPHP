@@ -18,10 +18,10 @@ class Routes {
 		
 		if (is_numeric($this->getLastUri()) ){
 			$id = $this->getLastUri();
-			$urlKey = str_repalce("/".$id,"",$urlKey);
+			$urlKey = str_replace("/".$id,"",$urlKey);
 			$view = $this->urls[$urlKey] . "?id=" . $id;
 		}else{
-			$view = $this->urls[$urlKey];	
+			$view = $this->urls[$urlKey];
 		}
 		if ($view == null) return "404.php";
 		return $view;
@@ -41,6 +41,7 @@ class Routes {
 		$uri = substr($_SERVER['REQUEST_URI'], strlen($basepath));
 		if (strstr($uri, '?')) $uri = substr($uri, 0, strpos($uri, '?'));
 		$uri = trim($uri, '/');
+		$uri = explode("/",$uri);
 		return $uri[sizeof($uri) - 1];
 	}
 }
