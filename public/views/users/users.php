@@ -6,7 +6,7 @@ $res = $users->getUsers();
 	<h1>Users</h1>
 	<ul>
 		<?php
-		while($row = mysql_fetch_assoc($res)){
+		while($row = $res->fetch_assoc()){
 			echo "<li>Name :". $row["name"] . " - Email: " . $row["email"] ."</li>";
 		}
 		?>

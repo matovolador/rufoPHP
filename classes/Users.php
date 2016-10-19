@@ -300,9 +300,14 @@ class Users {
 	}
 
 	public function getUsers(){
-		$res = $this->db->request("SELECT * FROM users");
-		return $res;
-	}
+        $res = $this->db->request("SELECT * FROM users");
+        return $res;
+    }
+
+    public function getUserById($id){
+        $res = $this->db->request("SELECT * FROM users WHERE id = '$id'");
+        return $res;
+    }
 
 }
 
