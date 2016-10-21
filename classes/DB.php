@@ -32,6 +32,10 @@ class DB{
 
 	public function request($sql){
 		$res = mysqli_query($this->link,$sql);
+		$this->error = mysqli_error($this->link);
+		if ($this->error <> ''){
+			$this->error = "<br><i>&lt;$this->sql&gt;</i><br>".$this->error;
+		}
 		return $res;
 	}
             
@@ -40,6 +44,9 @@ class DB{
 		$this->link = null;
 	}
             
+    public function error(){
+    	return $this->error;
+    }
 }
     
 ?>

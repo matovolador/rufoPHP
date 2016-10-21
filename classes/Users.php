@@ -14,54 +14,16 @@ class Users {
         return $res;
     }
     
-    //$args["name"=>x,"pass"=>x]
-    public function loginName($args){
-        $name=$args["name"];
-        $pass=md5($args["pass"]);
-        $res=$this->db->request("SELECT * FROM users WHERE (name = '$name' AND password = '$pass') LIMIT 1");
-        if ($row=mysql_fetch_assoc($res)){
-            login_end($row);
-        }            
-    }
     
     //$args["email"=>x,"pass"=>x]
-    public function loginEmail($args){
+    public function login($args){
         $email=$args["email"];
         $pass=md5($args["pass"]);
-        $res=$this->db->request("SELECT * FROM users WHERE (email = '$email' AND password = '$pass') LIMIT 1");
-        if ($row=mysql_fetch_assoc($res)){
-            login_end($row);
-        }
+        $res=$this->db->request("SELECT * FROM users WHERE email = '$email' AND password = '$pass'");
+        return $res;
     }
     
-    private function loginEnd($row){
-        session_start();
-        $_SESSION['name']=$row['name'];
-        $_SESSION['id']=$row['id'];
-        $_SESSION['email']=$row['email'];
-        header("Location: ".SITE_URL);
-    }
     
-    public function logout(){
-        if (isset($_SESSION)){
-            unset($_SESSION);
-            header("Location: ".SITE_URL);
-        }
-    }
-
-    //$args["name"=>x,"pass"=>x,"email"=>x]  .. these variables are validated in "CONTROLS" so no validation is required here
-    public function register($args){
-        $name = $args["name"];
-        $email = $args["email"];
-        $pass = md5($args["pass"]);
-        $this->db->request("INSERT INTO users (name,password,email) VALUES ('$name','$password','$email')");
-        $id = $this->db->request("SELECT id FROM users WHERE name='$name' LIMIT 1");
-        session_start();
-        $_SESSION["name"]=$name;
-        $_SESSION["id"]=$id;
-        $_SESSION['email'];
-
-    }
     public function setRandPass($email){
         $randPass=$this->randKey();
         $this->db->request("UPDATE users SET randPass='$randPass',password='$randPass' WHERE email='$email'");
@@ -218,7 +180,7 @@ class Users {
 	public function validateUserName($name){
 		$error = null;
 		$res = $this->db->request("SELECT * FROM users WHERE name='$name'");
-		if ($row = mysql_fetch_assoc($res)){
+		if ($row = $res->fetch_assoc()){
 			$error = "That name is already taken.";
 			return $error;
 		}
@@ -246,7 +208,7 @@ class Users {
 		}
 
 		$res = $this->db->request("SELECT * FROM users WHERE email='$email'");
-		if ($row = mysql_fetch_assoc($res)){
+		if ($row = $res->fetch_assoc()){
 			$error = "That email is already taken.";
 			return $error;
 		}
@@ -274,7 +236,7 @@ class Users {
 
 	public function resetPassword($email){
 		$res = $this->db->request("SELECT * FROM users WHERE email = '$email'");
-		if ($row=mysql_fetch_assoc($res)){
+		if ($row=$res->fetch_assoc()){
 			$user = new User();
 			$user->setRandPass($email);
 			return true;

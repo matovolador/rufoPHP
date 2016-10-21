@@ -1,8 +1,8 @@
 <?php include("../_config.php");
-
+session_start();
 //ROUTING-----
 $route = new Routes();
-//echo $route->getLastUri();
+//echo $route->getCurrentUri();
 $viewFile = $route->getView($route->getCurrentUri());
 //echo $viewFile;
 //------------------
@@ -61,7 +61,7 @@ and open the template in the editor.
 				     </div>
 			      <ul class="nav navbar-nav navbar-right">
 			      <?php
-			    	if (isset($_SESSION)){ ?>
+			    	if (isset($_SESSION['id'])){ ?>
 				    	<li class="dropdown">
 				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
 				          <ul class="dropdown-menu">
@@ -69,7 +69,7 @@ and open the template in the editor.
 				            <li><a href="#">Another action</a></li>
 				            <li><a href="#">Configuration</a></li>
 				            <li role="separator" class="divider"></li>
-				            <li><a href="#">Sign Out</a></li>
+				            <li><a href="<?php echo SITE_URL ?>../actions/logout.php">Sign Out</a></li>
 				          </ul>
 				        </li>
 				    <?php
@@ -123,6 +123,19 @@ and open the template in the editor.
 			}
 			node.setAttribute("class", "active");
 		});
+
+		function signout() {
+	      	$.ajax({
+	           type: "POST",
+	           url: SITE_URL+'../actions/logout.php',
+	           data:{action:'logout'},
+	           success:function(txt) {
+	           		alert(txt);
+					window.location.reload();
+	           }
+
+	      	});
+		}
 		</script>
 	</body>
 </html>
