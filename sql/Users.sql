@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-10-2016 a las 16:46:46
+-- Tiempo de generación: 21-10-2016 a las 17:26:47
 -- Versión del servidor: 10.1.16-MariaDB
 -- Versión de PHP: 5.5.38
 
@@ -17,20 +17,20 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `RufoPHP`
+-- Base de datos: `rufophp`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Users`
+-- Estructura de tabla para la tabla `users`
 --
 
 CREATE TABLE `users` (
   `id` int(15) NOT NULL,
   `name` varchar(25) NOT NULL,
-  `email` varchar(25) NOT NULL,
-  `password` varchar(25) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `randPass` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -39,9 +39,9 @@ CREATE TABLE `users` (
 --
 
 --
--- Indices de la tabla `Users`
+-- Indices de la tabla `users`
 --
-ALTER TABLE `Users`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -49,9 +49,9 @@ ALTER TABLE `Users`
 --
 
 --
--- AUTO_INCREMENT de la tabla `Users`
+-- AUTO_INCREMENT de la tabla `users`
 --
-ALTER TABLE `Users`
+ALTER TABLE `users`
   MODIFY `id` int(15) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
