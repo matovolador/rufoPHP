@@ -15,7 +15,7 @@ if ($row = mysqli_fetch_assoc($res)){
 	header("Location: ".SITE_URL);
 }else{
 	echo mysqli_fetch_assoc($res);
-	echo "FUCK";
+	echo "Bad login login.php";
     header("Location :".SITE_URL."fuck");
     
 		
