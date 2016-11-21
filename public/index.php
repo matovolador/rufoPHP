@@ -1,9 +1,9 @@
 <?php include("../_config.php");
 session_start();
 //ROUTING-----
-$route = new Routes();
+$routes = new Routes();
 //echo $route->getCurrentUri();
-$viewFile = $route->getView($route->getCurrentUri());
+$viewFile = $routes->getView($routes->getCurrentUri());
 //echo $viewFile;
 //------------------
 ?>
@@ -120,6 +120,9 @@ and open the template in the editor.
 				case "contact.php":
 					node = document.getElementById("mymenu").getElementsByTagName("li")[1];
 					break;
+				case "users.php":
+					node = document.getElementById("mymenu").getElementsByTagName("li")[2];
+					break;					
 			}
 			node.setAttribute("class", "active");
 		});
