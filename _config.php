@@ -10,7 +10,7 @@ define("SITE_URL","http://".$_SERVER["HTTP_HOST"]."/RufoPHP/");
 //Site email:
 define('SITE_EMAIL','noreply@example.com');
 
-include_once(SITE_URL."classes/Routes.php");
-include_once(SITE_URL."classes/DB.php");
-include_once(SITE_URL."classes/Users.php");
+include_once("classes/Routes.php");
+include_once("classes/DB.php");
+include_once("classes/Users.php");
 ?>
