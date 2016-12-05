@@ -6,17 +6,14 @@ $pass = $_POST["password"];
 $users = new Users();
 $args=["email"=>$email,"pass"=>$pass];
 $res=$users->login($args);
-echo $users->db->error();
 if ($row = mysqli_fetch_assoc($res)){
 	$_SESSION['name']=$row['name'];
     $_SESSION['id']=$row['id'];
     $_SESSION['email']=$row['email'];
-    echo "YEAH";
 	header("Location: ".SITE_URL);
 }else{
 	echo mysqli_fetch_assoc($res);
-	echo "Bad login login.php";
-    header("Location :".SITE_URL."fuck");
+    header("Location :".SITE_URL."<enterbadloginview>");
     
 		
 }

@@ -1,4 +1,4 @@
-<?php include ("../../_config.php"); 
+<?php include ("../_config.php"); 
 $users = new Users();
 if (!isset($_GET['id'])){
 	$res = $users->getUsers();
