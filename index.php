@@ -123,9 +123,14 @@ and open the template in the editor.
 					break;
 				case "users.php":
 					node = document.getElementById("mymenu").getElementsByTagName("li")[2];
-					break;					
+					break;	
+				default :
+					node = false;
+					break;
 			}
-			node.setAttribute("class", "active");
+			if (!node==false)
+			node.setAttribute("class", "active");				
+			}
 		});
 
 		function signout() {
