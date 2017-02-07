@@ -15,7 +15,13 @@ class Routes {
 
 	
 	public function getView($urlKey){
-		
+		$vars = $this->getVars();
+		$urlKey=str_replace(".php","",$urlKey);
+		if ($vars){
+			$urlKey=str_replace($vars, "", $urlKey);
+			$view = $this->urls[$urlKey].$vars;
+			return $view;
+		}
 		if (is_numeric($this->getLastUri()) ){
 			$id = $this->getLastUri();
 			$urlKey = str_replace("/".$id,"",$urlKey);
@@ -45,5 +51,16 @@ class Routes {
 		$uri = trim($uri, '/');
 		$uri = explode("/",$uri);
 		return $uri[sizeof($uri) - 1];
+	}
+
+	public function getVars(){
+		$basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/';
+		$uri = substr($_SERVER['REQUEST_URI'], strlen($basepath));
+		if ($pos = strpos($uri,"?")){
+			$vars = substr($uri,$pos,strlen($uri));
+			return $vars;
+		}else{
+			return false;
+		}
 	}
 }
