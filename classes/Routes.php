@@ -19,8 +19,9 @@ class Routes {
 		$urlKey=str_replace(".php","",$urlKey);
 		if ($vars){
 			$urlKey=str_replace($vars, "", $urlKey);
-			$view = $this->urls[$urlKey].$vars;
-			return $view;
+			$view = $this->urls[$urlKey];
+			if ($view == null) return "404.php";
+			return $view.$vars;
 		}
 		if (is_numeric($this->getLastUri()) ){
 			$id = $this->getLastUri();
