@@ -2,7 +2,7 @@
 class Users {
 	public $db;
 	public function Users(){
-		$this->db = new DB();
+		$this->db = new PDOdb();
 	}
 
 	//$args["name"=>x,"pass"=>x,"email"=>x]
@@ -10,7 +10,7 @@ class Users {
         $name = $args["name"];
         $pass = md5($args["pass"]);
         $email = $args["email"];
-        $res=$this->db->request("INSERT INTO users (name,password,email) VALUES ('$name','$pass','$email')");
+        $res=$this->db->request("INSERT INTO users (name,password,email) VALUES (?,?,?)","insert",[$name,$pass,$email]);
         return $res;
     }
     
@@ -19,14 +19,14 @@ class Users {
     public function login($args){
         $email=$args["email"];
         $pass=md5($args["pass"]);
-        $res=$this->db->request("SELECT * FROM users WHERE email = '$email' AND password = '$pass'");
+        $res=$this->db->request("SELECT * FROM users WHERE email = ? AND password = ?","select",[$email,$pass]);
         return $res;
     }
     
     
     public function setRandPass($email){
         $randPass=$this->randKey();
-        $this->db->request("UPDATE users SET randPass='$randPass',password='$randPass' WHERE email='$email'");
+        $this->db->request("UPDATE users SET randPass=?,password=? WHERE email='$email'","update",[$randPass,$randPass]);
         //TODO SEND EMAIL WITH randPass
     }
 
@@ -34,18 +34,17 @@ class Users {
 
     public function changePassword($pass){
         $pass = md5($pass);
-        $null = null;
         $id = $_SESSION['id'];
-        $this->db->request("UPDATE users SET randPass='$null',password='$pass' WHERE id='$id'");
+        $this->db->request("UPDATE users SET randPass='',password=? WHERE id=?","update",[$pass,$id]);
     }
 
 
     public function randKey(){
         $randKey=$this->getRandNum();
-        $r=$this->request("SELECT * FROM users WHERE (password=$randKey OR randPass=$randKey)");
-        while($row=mysql_fetch_assoc($r)){
+        $res=$this->request("SELECT * FROM users WHERE (password=$randKey OR randPass=$randKey)","select");
+        while(!empty($res)){
             $randKey=$this->getRandNum();
-            $r=$this->request("SELECT * FROM users WHERE (password=$randKey OR randPass=$randKey)");
+            $res=$this->request("SELECT * FROM users WHERE (password=$randKey OR randPass=$randKey)","select");
         }
         return $randKey;
     }
@@ -179,8 +178,8 @@ class Users {
 
 	public function validateUserName($name){
 		$error = null;
-		$res = $this->db->request("SELECT * FROM users WHERE name='$name'");
-		if ($row = $res->fetch_assoc()){
+		$res = $this->db->request("SELECT * FROM users WHERE name=?","select",[$name]);
+		if (!empty($res)){
 			$error = "That name is already taken.";
 			return $error;
 		}
@@ -207,8 +206,8 @@ class Users {
 			return $error;
 		}
 
-		$res = $this->db->request("SELECT * FROM users WHERE email='$email'");
-		if ($row = $res->fetch_assoc()){
+		$res = $this->db->request("SELECT * FROM users WHERE email=?","select",[$email]);
+		if (!empty($res)){
 			$error = "That email is already taken.";
 			return $error;
 		}
@@ -235,8 +234,8 @@ class Users {
 	}
 
 	public function resetPassword($email){
-		$res = $this->db->request("SELECT * FROM users WHERE email = '$email'");
-		if ($row=$res->fetch_assoc()){
+		$res = $this->db->request("SELECT * FROM users WHERE email = ?","select",[$email]);
+		if (!empty($res)){
 			$user = new User();
 			$user->setRandPass($email);
 			return true;
@@ -262,12 +261,12 @@ class Users {
 	}
 
 	public function getUsers(){
-        $res = $this->db->request("SELECT * FROM users");
+        $res = $this->db->request("SELECT * FROM users","select");
         return $res;
     }
 
     public function getUserById($id){
-        $res = $this->db->request("SELECT * FROM users WHERE id = '$id'");
+        $res = $this->db->request("SELECT * FROM users WHERE id = ?","select",[$id]);
         return $res;
     }
 
