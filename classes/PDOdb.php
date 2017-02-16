@@ -2,8 +2,7 @@
 
 class PDOdb {
 	private $pdo = null;
-
-
+	private $stm= null;
 	public function PDOdb(){
 		$dsn = "mysql:host=".DB_HOST.";dbname=".DB_NAME.";charset=utf8";
 		$opt = array(
@@ -15,21 +14,24 @@ class PDOdb {
 
 	public function request($sql,$type,$params=FALSE){
 		if ($params == FALSE){
-			$stm = $this->pdo->prepare($sql);
-			$stm->execute();
+			$this->stm = $this->pdo->prepare($sql);
+			$this->stm->execute();
 			if ($type!="select") return true;
-			$res = $stm->fetchAll();
+			$res = $this->stm->fetchAll();
 			return $res;
 		}else{
-			$stm = $this->pdo->prepare($sql);
-			$stm->execute($params);
+			$this->stm = $this->pdo->prepare($sql);
+			$this->stm->execute($params);
 			if ($type!="select") return true;
-			$res = $stm->fetchAll();
+			$res = $this->stm->fetchAll();
 			return $res;	
 		}
 		
 	}
 
+	public function affectedRows(){
+		return $this->stm->rowCount();
+	}
+
 
 }
-
