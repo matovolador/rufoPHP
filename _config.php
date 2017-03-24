@@ -1,5 +1,9 @@
 <?php
+//development:
 error_reporting(-1);
+
+//publishing:
+//error_reporting(E_ERROR)
 
 //Local:
 define("SITE_URL","http://".$_SERVER["HTTP_HOST"]."/RufoPHP/");
@@ -7,8 +11,6 @@ define("SITE_URL","http://".$_SERVER["HTTP_HOST"]."/RufoPHP/");
 //Server:
 //define("SITE_URL","http://".$_SERVER["HTTP_HOST"]."/");
 
-//Site email:
-define('SITE_EMAIL','noreply@example.com');
 
 /*-----------------
  * IMPORTANT!!!

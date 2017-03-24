@@ -7,7 +7,6 @@ class Routes {
 				 "contact" => "contact.php",
 				 "signin" => "signin.php",
 				 "signup" => "signup.php",
-				 "actions/logout.php" => "actions/logout.php",
 				 "users" => "users.php"
 
 					];
