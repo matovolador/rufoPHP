@@ -103,15 +103,21 @@ and open the template in the editor.
 	</footer>
 		<script type="text/javascript">
 		var viewFile = "<?php echo $viewFile ?>";
+		var mainFile = "";
 		$(document).ready(function(){
 
 			$("#main-content").load(SITE_URL+"views/"+viewFile);
+			pos = viewFile.indexOf("?");
+			cleanFile = viewFile.substr(0,pos);
+			idPos = viewFile.indexOf("=");
+			fileId = viewFile.substr(idPos+1,viewFile.length);
+			if (cleanFile == "") cleanFile = viewFile;
 			for (i=0;i<$('#mymenu ul li').length;i++){
 				var node = document.getElementById("mymenu").getElementsByTagName("li")[i];
 				node.setAttribute("class", "");
 			}
 			var node;
-			switch (viewFile){
+			switch (cleanFile){
 				case "":
 					node = document.getElementById("mymenu").getElementsByTagName("li")[0];
 					break;
@@ -122,15 +128,25 @@ and open the template in the editor.
 					node = document.getElementById("mymenu").getElementsByTagName("li")[1];
 					break;
 				case "users.php":
-					node = document.getElementById("mymenu").getElementsByTagName("li")[2];
-					break;	
+					<?php if (isset($_SESSION['id'])){
+						$sessionId = $_SESSION['id'];
+					}else{
+						$sessionId = null;
+					} ?>
+					session = <?php echo json_encode($sessionId) ?>;
+					if ( fileId == session){
+						node = document.getElementById("mymenu").getElementsByTagName("li")[2];	
+					}else{
+						node=false;
+					}
+					
+					break;
 				default :
 					node = false;
 					break;
 			}
 			if (!node==false)
-			node.setAttribute("class", "active");				
-			}
+			node.setAttribute("class", "active");
 		});
 
 		function signout() {
