@@ -1,7 +1,7 @@
 <?php
 class Routes {
 	public $urls;
-	public function Routes(){
+	function __construct(){
 		$this->urls = [ "" => "home.php",
 					"home" => "home.php",
 				 "contact" => "contact.php",

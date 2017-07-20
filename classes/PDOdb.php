@@ -3,7 +3,7 @@
 class PDOdb {
 	private $pdo = null;
 	private $stm= null;
-	public function PDOdb(){
+	function __construct(){
 		$dsn = "mysql:host=".DB_HOST.";dbname=".DB_NAME.";charset=utf8";
 		$opt = array(
 		    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,

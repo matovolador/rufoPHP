@@ -1,7 +1,7 @@
 <?php
 class Users {
 	public $db;
-	public function Users(){
+	function __construct(){
 		$this->db = new PDOdb();
 	}
 
