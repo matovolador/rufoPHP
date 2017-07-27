@@ -28,4 +28,5 @@ define('DB_PASS', "secret");
 include_once("classes/Routes.php");
 include_once("classes/PDOdb.php");
 include_once("classes/Users.php");
+include_once("classes/CallAPI.php");
 ?>
