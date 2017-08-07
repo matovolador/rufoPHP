@@ -22,15 +22,8 @@ class Routes {
 			if ($view == null) return "404.php";
 			return $view.$vars;
 		}
-		if (is_numeric($this->getLastUri()) ){
-			$id = $this->getLastUri();
-			$urlKey = str_replace("/".$id,"",$urlKey);
-			$view = $this->urls[$urlKey];
-			if ($view == null) return "404.php";
-			$view = $this->urls[$urlKey] . "?id=" . $id;
-		}else{
-			$view = $this->urls[$urlKey];
-		}
+		$view = $this->urls[$urlKey];
+		
 		if ($view == null) return "404.php";
 		return $view;
 	}
@@ -43,7 +36,6 @@ class Routes {
 		$uri = trim($uri, '/');
 		return $uri;
 	}
-	//TODO: FIX THIS FUNCTION. Return value is incorrect
 	public function getLastUri() {
 		$basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/';
 		$uri = substr($_SERVER['REQUEST_URI'], strlen($basepath));
@@ -56,6 +48,7 @@ class Routes {
 	public function getVars(){
 		$basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/';
 		$uri = substr($_SERVER['REQUEST_URI'], strlen($basepath));
+		$uri = $_SERVER['REQUEST_URI'];
 		if ($pos = strpos($uri,"?")){
 			$vars = substr($uri,$pos,strlen($uri));
 			return $vars;
