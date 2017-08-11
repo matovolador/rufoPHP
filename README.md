@@ -74,3 +74,5 @@ include_once("classes/PDOdb.php");
 include_once("classes/Users.php");
 include_once("classes/CallAPI.php");
 ```
+
+LIMITATIONS: Because of the routing settings, POST type forms cannot have "action" set to " ". The way this framework handles POST forms, is by submiting the form to an "action file" inside the "actions" folder, and having that "action file" redirecting to whatever page you desire.
