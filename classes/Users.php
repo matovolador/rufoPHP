@@ -19,7 +19,7 @@ class Users {
     public function login($args){
         $email=$args["email"];
         $pass=md5($args["pass"]);
-        $res=$this->db->request("SELECT * FROM users WHERE email = ? AND password = ?","select",[$email,$pass]);
+        $res=$this->db->request("SELECT * FROM users WHERE email = ? AND password = ?","select",[$email,$pass],true);
         return $res;
     }
     

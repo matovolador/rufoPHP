@@ -14,18 +14,21 @@ if ($flag == null and $flag2 == null and $flag3 == null){
 	$users->create(["name"=> $name,"email"=> $email,"pass" => $pass]);
 	$args=["email"=>$email,"pass"=>$pass];
 	$res=$users->login($args);
-	if ($row = $res->fetch_assoc()){
-	    $_SESSION['name']=$row['name'];
-    	$_SESSION['id']=$row['id'];
-    	$_SESSION['email']=$row['email'];
+	if ($res){
+	    $_SESSION['name']=$res['name'];
+    	$_SESSION['id']=$res['id'];
+    	$_SESSION['email']=$res['email'];
 	    header("Location: ".SITE_URL);
+	    exit();
 	}else{
 		echo "BAD LOGIN IN Users.php";
+		exit();
 	}
 }else{
 	echo "Errors: ". print_r($flag) ." - " . print_r($flag2) . " - " . print_r($flag3);
 	//TODO HANDLE ERRORS VIEW:
 	//header("Location: ......");
+	exit();
 }
 
 ?>

@@ -6,3 +6,4 @@ foreach ($_SESSION as $key=>$value){
 }
 unset($_SESSION['id']);
 header("Location: ".SITE_URL);
+exit();

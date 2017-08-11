@@ -6,15 +6,15 @@ $pass = $_POST["password"];
 $users = new Users();
 $args=["email"=>$email,"pass"=>$pass];
 $res=$users->login($args);
-if ($row = mysqli_fetch_assoc($res)){
-	$_SESSION['name']=$row['name'];
-    $_SESSION['id']=$row['id'];
-    $_SESSION['email']=$row['email'];
+if ($res){
+	$_SESSION['name']=$res['name'];
+    $_SESSION['id']=$res['id'];
+    $_SESSION['email']=$res['email'];
 	header("Location: ".SITE_URL);
+	exit();
 }else{
-	echo mysqli_fetch_assoc($res);
-    header("Location :".SITE_URL."<enterbadloginview>");
-    
+	header("Location :".SITE_URL."<enterbadloginview>");
+    exit();
 		
 }
 
