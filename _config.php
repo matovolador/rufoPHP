@@ -1,18 +1,16 @@
 <?php
-//development:
-error_reporting(-1);
-
-//publishing:
-//error_reporting(E_ERROR)
-
 //Local:
 define("SITE_URL","http://".$_SERVER["HTTP_HOST"]."/RufoPHP/");
+error_reporting(-1);
+
 
 //Server:
+//error_reporting(E_ERROR);
 //define("SITE_URL","http://".$_SERVER["HTTP_HOST"]."/");
 
 
 /*-----------------
+ * DATABASE SETTINGS:
  * IMPORTANT!!!
  * configure these settings for your own purpose
  */
