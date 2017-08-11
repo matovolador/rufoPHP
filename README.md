@@ -5,7 +5,7 @@ If you like this software, consider making a donation to this Bitcoin address: 1
 
 INSTALLATION:
 You must configure your Apache2 server configuration for your site with the following contents:
-[code]
+`
 # domain: example.com
 # public: /var/www/html/example.com/public_html/
 
@@ -38,4 +38,4 @@ RewriteCond %{SERVER_NAME} =example.com [OR]
 RewriteCond %{SERVER_NAME} =www.example.com
 RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
 </VirtualHost>
-[/code]
+`
