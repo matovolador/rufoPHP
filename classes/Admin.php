@@ -1,5 +1,7 @@
 <?php
 
+
+
 class Admin extends Model{
   const SUPERUSER_FLAG = -1;
   function __construct(){
@@ -10,6 +12,8 @@ class Admin extends Model{
     if ($this->superuser_exists()) return ['error'=>1,'message'=>'A super user already exists.'];
     if ($params['password']!=$params['password_repeat']) return ['error'=>1,"message"=>"Passwords do not match."];
     if (!Utils::passwordStrength($params['password'],3)) return ['error'=>1,'message'=>Utils::passwordStrengthMessage(3)];
+    if (!Utils::validateEmail($params['email'])) return ['error'=>1,"message"=>"Invalid email."];
+
     unset($params['password_repeat']);
     $params['permission_flag'] = self::SUPERUSER_FLAG;
     $params['password'] = Utils::encryptPassword($params['password']);
@@ -38,6 +42,14 @@ class Admin extends Model{
     }else{
       return false;
     }
+  }
+
+  public function createAdmin($params){
+    //TODO:
+    # check if superuser exists
+    # validate Email
+    # validate password
+
   }
 
 

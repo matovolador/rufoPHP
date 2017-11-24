@@ -1,4 +1,8 @@
 <?php
+
+//TODO Adapt User to implement Model functions---
+//TODO check if email already exists before creating new entry
+
 class User extends Model {
 	function __construct(){
 		parent::__construct();
