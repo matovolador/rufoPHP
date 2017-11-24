@@ -5,7 +5,7 @@ class User extends Model {
 	}
 
 	//$args["name"=>x,"pass"=>x,"email"=>x]
-  public function create ($args){
+  public function createUser ($args){
       $name = $args["name"];
       $pass = md5($args["pass"]);
       $email = $args["email"];

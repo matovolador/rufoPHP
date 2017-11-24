@@ -19,7 +19,7 @@ class Model{
     }
     return $res;
   }
-  public function createEntry($table,$params){
+  public function create($table,$params){
     if (!$this->sanitizeTableName($table)) return false;
     $keys="";
     $values="";
@@ -32,7 +32,7 @@ class Model{
     $res = $this->db->request("INSERT INTO ".$table." (".$keys.") VALUES (".$values.")","update",array_values($params));
     return $res;
   }
-  public function deleteEntry($table,$id){
+  public function delete($table,$id){
     if (!$this->sanitizeTableName($table)) return false;
     $res = $this->db->request("DELETE FROM ".$table." WHERE id=?","delete",[$id]);
     return $res;
