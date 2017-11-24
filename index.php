@@ -1,4 +1,4 @@
-<?php include("_config.php");
+<?php require("_config.php");
 session_start();
 //ROUTING-----
 $routes = new Routes();
@@ -22,23 +22,23 @@ and open the template in the editor.
         <!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-		<!-- Optional theme 
+		<!-- Optional theme
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 		-->
-		<link rel="stylesheet" href="<?php echo SITE_URL ?>css/bootstrap-sandstone.min.css" >
+		<link rel="stylesheet" href="<?php echo SITE_URL ?>css/bootstrap.min.css" >
 
 		<link rel="stylesheet" href="<?php echo SITE_URL ?>css/style.css">
-		
+
 		<script type="text/javascript">var SITE_URL = "<?php echo SITE_URL;?>"</script>
 		<!--JQuery minified -->
-		<script src="<?php echo SITE_URL ?>js/jquery-3.1.1.min.js"></script>
-		<script src="<?php echo SITE_URL ?>js/jquery-validation-1.15.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="<?php echo SITE_URL ?>js/jquery-validation-1.15.0.js"></script>
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body>
     <header>
-    	<nav class="navbar navbar-default">
+    	<nav class="navbar navbar-inverse">
 		  	<div class="container-fluid">
 			    <!-- Brand and toggle get grouped for better mobile display -->
 			    <div class="navbar-header">
@@ -60,32 +60,18 @@ and open the template in the editor.
 				        <li><a class="mylinks" href="<?php echo SITE_URL ?>users">Users</a></li>
 				      </ul>
 				     </div>
-			      <ul class="nav navbar-nav navbar-right">
-			      <?php
-			    	if (isset($_SESSION['id'])){ ?>
-				    	<li class="dropdown">
-				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
-				          <ul class="dropdown-menu">
-				            <li><a href="#">Profile</a></li>
-				            <li><a href="#">Another action</a></li>
-				            <li><a href="#">Configuration</a></li>
-				            <li role="separator" class="divider"></li>
-				            <li><a href="<?php echo SITE_URL ?>actions/logout.php">Sign Out</a></li>
-				          </ul>
-				        </li>
-				    <?php
-			    	}else{  ?>
-			    		<li><a href="<?php echo SITE_URL ?>signin">Sign In</a></li>	
-			    	<?php } ?>
-			        
-			        
-			      </ul>
-			      <form class="navbar-form navbar-right">
-			        <div class="form-group">
-			          <input type="text" class="form-control" placeholder="Search">
-			        </div>
-			        <button type="submit" class="btn btn-default">Search</button>
-			      </form>
+            <ul class="nav navbar-nav navbar-right">
+ 			      <?php
+ 			    	if (isset($_SESSION['id'])){ ?>
+ 				      <li><a href="<?php echo SITE_URL ?>actions/logout.php"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Sign Out</a></li>
+
+ 				    <?php
+ 			    	}else{  ?>
+ 			    		<li><a href="<?php echo SITE_URL ?>signin"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Sign In</a></li>
+ 			    	<?php } ?>
+
+
+ 			      </ul>
 			    </div><!-- /.navbar-collapse -->
 		  	</div><!-- /.container-fluid -->
 		</nav>
@@ -99,7 +85,7 @@ and open the template in the editor.
 				&copy; RufoDev.com 2016
 			</div>
 		</div>
-		
+
 	</footer>
 		<script type="text/javascript">
 		var viewFile = "<?php echo $viewFile ?>";
@@ -135,11 +121,11 @@ and open the template in the editor.
 					} ?>
 					session = <?php echo json_encode($sessionId) ?>;
 					if ( fileId == session){
-						node = document.getElementById("mymenu").getElementsByTagName("li")[2];	
+						node = document.getElementById("mymenu").getElementsByTagName("li")[2];
 					}else{
 						node=false;
 					}
-					
+
 					break;
 				default :
 					node = false;

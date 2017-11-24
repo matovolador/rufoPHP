@@ -1,12 +1,22 @@
 <?php
-#Local:
-define("SITE_URL","http://".$_SERVER["HTTP_HOST"]."/RufoPHP/");
-error_reporting(-1);
 
+//Ennvironment. Set this var to "pub" or "dev"
+$env = "dev";
 
-#Server:
-//error_reporting(E_ERROR);
-//define("SITE_URL","http://".$_SERVER["HTTP_HOST"]."/");
+date_default_timezone_set('UTC');
+
+//Development
+if ($env == "dev"){
+	define("SITE_URL","http://".$_SERVER["HTTP_HOST"]."/rufoPHP/");
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
+}
+//Production
+if ($env == "pub"){
+	error_reporting(E_ERROR);
+	define("SITE_URL","http://".$_SERVER["HTTP_HOST"]."/");
+}
 
 
 /*-----------------
@@ -21,9 +31,8 @@ define('DB_PASS', "secret");
 
 //------------------------------------------
 
-# INCLUDE ALL YOUR CLASSES HERE:
-include_once("classes/Routes.php");
-include_once("classes/PDOdb.php");
-include_once("classes/Users.php");
-include_once("classes/CallAPI.php");
+# Class Autoloader:
+spl_autoload_register(function ($class_name) {
+    require("classes/".$class_name . '.php');
+});
 ?>

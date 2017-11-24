@@ -1,0 +1,16 @@
+0) Create a directory named {PROJECT_ROOT_DIR}/db/migrations with correct read/write permissions, if not exists.
+-
+
+# Run all these commands from your {PROJECT_ROOT_DIR}
+
+1) Initialize phinx (this should be done from your project root directory). This will create a phinx configuration file in your root directory named "phinx.yml" (if file already exists from cloning the repo, delete it -optional- or change it with your own configuration):
+$ vendor/bin/phinx init
+
+2) Create new migration:
+$ vendor/bin/phinx create <enter_any_file_name>
+
+3) Run Migrations (-e parameter needs to be one of the following: production, testing, development. If you dont pass the -e parameter, the default environment will be taken. All migrations point to your configuration data in the phinx.yml file):
+$ vendor/bin/phinx migrate -e development
+
+4) Check status of migrations:
+$ vendor/bin/phinx status -e development

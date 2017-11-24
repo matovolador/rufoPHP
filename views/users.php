@@ -1,9 +1,9 @@
-<?php include ("../_config.php"); 
-$users = new Users();
+<?php require("../_config.php");
+$users = new User();
 if (!isset($_GET['id'])){
-	$res = $users->getUsers();
+	$res = $users->getAll("users");
 }else{
-	$res = $users->getUserById($_GET['id']);	
+	$res = $users->get("users",$_GET['id']);
 }
 
 ?>
@@ -13,7 +13,8 @@ if (!isset($_GET['id'])){
 	if (!isset($_GET['id'])){ ?>
 	<ul>
 		<?php
-		while($row = $res->fetch_assoc()){
+
+		while($res && $row = $res->fetch_assoc()){
 			echo "<li>Name :". $row["name"] . " - Email: " . $row["email"] ." <a href=".SITE_URL."users/".$row['id'].">View</a></li>";
 
 		}
@@ -23,12 +24,12 @@ if (!isset($_GET['id'])){
 	</ul>
 	<?php
 	}else{
-		if($row = $res->fetch_assoc()){
+		if($res && $row = $res->fetch_assoc()){
 			echo "<p>Name :". $row["name"] . " - Email: " . $row["email"] ."</p>";
 		}else{
 			echo "<p>User by id=".$_GET['id']."not found</p>";
 		}
-		
+
 	} ?>
-	
+
 </div>

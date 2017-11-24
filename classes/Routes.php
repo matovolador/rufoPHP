@@ -1,18 +1,29 @@
 <?php
 class Routes {
 	public $urls;
-	function __construct(){
-		$this->urls = [ "" => "home.php",
-					"home" => "home.php",
-				 "contact" => "contact.php",
-				 "signin" => "signin.php",
-				 "signup" => "signup.php",
-				 "users" => "users.php"
+	function __construct($admin=false){
+		if (!$admin){
+			$this->urls = [
+				"" => "home.php",
+				"home" => "home.php",
+				"contact" => "contact.php",
+				"signin" => "signin.php",
+				"signup" => "signup.php",
+				"users" => "users.php",
+			];
+		}else{
+			$this->urls = [
+				"" => "dashboard.php",
+				"dashboard" => "dashboard.php",
+				"login" => "login.php",
+				"create-user" => "create-user.php",
+				"create-group" => "create-group.php",
 
-					];
+			];
+		}
 	}
 
-	
+
 	public function getView($urlKey){
 		$vars = $this->getVars();
 		$urlKey=str_replace(".php","",$urlKey);
@@ -23,7 +34,7 @@ class Routes {
 			return $view.$vars;
 		}
 		$view = $this->urls[$urlKey];
-		
+
 		if ($view == null) return "404.php";
 		return $view;
 	}
