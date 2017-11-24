@@ -1,7 +1,7 @@
 <?php require("../_config.php"); ?>
 <div class="panel-body">
 	<h3>Sign In</h3>
-	<form id="form" action="<?php echo SITE_URL ?>../actions/login.php" method="post">
+	<form id="form" action="<?php echo SITE_URL ?>actions/login.php" method="post">
 		<div class="form-group">
 			<label for="email">Email address</label>
 			<input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>

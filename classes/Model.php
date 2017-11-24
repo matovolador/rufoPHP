@@ -1,6 +1,6 @@
 <?php
 class Model{
-  private $db;
+  protected $db;
   function __construct(){
     $this->db = new PDOdb();
   }

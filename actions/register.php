@@ -5,13 +5,13 @@ $name = $_POST['name'];
 $email = $_POST["email"];
 $pass = $_POST["password"];
 
-$users = new Users();
+$users = new User();
 $flag = $users->validateUserName($name);
 $flag2 = $users->validateEmail($email);
 $flag3 = $users->validatePassword($pass);
 
 if ($flag == null and $flag2 == null and $flag3 == null){
-	$users->create(["name"=> $name,"email"=> $email,"pass" => $pass]);
+	$users->createUser(["name"=> $name,"email"=> $email,"pass" => $pass]);
 	$args=["email"=>$email,"pass"=>$pass];
 	$res=$users->login($args);
 	if ($res){
