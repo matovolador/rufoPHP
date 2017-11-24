@@ -6,12 +6,12 @@ class Model{
   }
 
   public function get($table,$id){
-    if (!$this->sanitizeTableName($table)) return false;
+    if (!$this->db->sanitizeTableName($table)) return false;
     $res = $this->db->request("SELECT * FROM ".$table." WHERE id = ?","select",[$id],true);
     return $res;
 	}
   public function getAll($table,$orderDesc=false){
-    if (!$this->sanitizeTableName($table)) return false;
+    if (!$this->db->sanitizeTableName($table)) return false;
     if ($orderDesc==false){
       $res = $this->db->request("SELECT * FROM ".$table." ","select");
     }else{
@@ -20,7 +20,7 @@ class Model{
     return $res;
   }
   public function create($table,$params){
-    if (!$this->sanitizeTableName($table)) return false;
+    if (!$this->db->sanitizeTableName($table)) return false;
     $keys="";
     $values="";
     foreach ($params as $key => $value){
@@ -33,7 +33,7 @@ class Model{
     return $res;
   }
   public function delete($table,$id){
-    if (!$this->sanitizeTableName($table)) return false;
+    if (!$this->db->sanitizeTableName($table)) return false;
     $res = $this->db->request("DELETE FROM ".$table." WHERE id=?","delete",[$id]);
     return $res;
   }

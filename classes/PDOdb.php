@@ -52,7 +52,7 @@ class PDOdb {
 
 
 	public function sanitizeTableName($name){
-		$tables = $this->db->showTables();
+		$tables = $this->showTables();
 		if (in_array($name,$tables)) return $name;
 		return false;
 
