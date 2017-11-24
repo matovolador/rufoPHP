@@ -15,7 +15,7 @@ if (!isset($_GET['id'])){
 		<?php
 
 		while($res && $row = $res->fetch_assoc()){
-			echo "<li>Name :". $row["name"] . " - Email: " . $row["email"] ." <a href=".SITE_URL."users/".$row['id'].">View</a></li>";
+			echo "<li>Name :". $row["username"] . " - Email: " . $row["email"] ." <a href=".SITE_URL."users/".$row['id'].">View</a></li>";
 
 		}
 		?>
@@ -25,9 +25,9 @@ if (!isset($_GET['id'])){
 	<?php
 	}else{
 		if($res && $row = $res->fetch_assoc()){
-			echo "<p>Name :". $row["name"] . " - Email: " . $row["email"] ."</p>";
+			echo "<p>Name :". $row["username"] . " - Email: " . $row["email"] ."</p>";
 		}else{
-			echo "<p>User by id=".$_GET['id']."not found</p>";
+			echo "<p>User by id=".$_GET['id']." not found</p>";
 		}
 
 	}
