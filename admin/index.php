@@ -23,9 +23,10 @@ and open the template in the editor.
     <!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-		<link rel="stylesheet" href="<?php echo SITE_URL ?>admin/css/bootstrap.min.css">
+		<link rel="stylesheet" href="<?php echo SITE_URL ?>admin/css/bootstrap-theme.min.css">
 
-		<link rel="stylesheet" href="<?php echo SITE_URL ?>css/style.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL ?>css/style.css">
+
 
 		<script type="text/javascript">var SITE_URL = "<?php echo SITE_URL;?>"</script>
 		<!--JQuery minified -->
@@ -72,6 +73,13 @@ and open the template in the editor.
 		  	</div><!-- /.container-fluid -->
 		</nav>
     </header>
+
+    <?php
+    if (isset($_SESSION['messages']) ){
+      echo "<div class='messages ".$_SESSION['messages']['status']."'>".$_SESSION['messages']['message']." </div>";
+    }
+    ?>
+
     <!--Load views in this div -->
     <div id="main-content"></div>
     <!-- -->
@@ -146,3 +154,9 @@ and open the template in the editor.
 		</script>
   </body>
 </html>
+
+<?php
+
+unset($_SESSION['messages']);
+
+?>

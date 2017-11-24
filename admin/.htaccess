@@ -1,13 +1,6 @@
 RewriteEngine On
+RewriteBase /rufoPHP/admin
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.+)$ index.php?p=$1
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.+)$^(/.+)$ index.php?p=$1&sp=$2
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.+)$^(/.+)$^(/.+)$ index.php?p=$1&sp=$2&tp=$3
+RewriteRule ^(.*)$ index.php/admin/$1 [L]

@@ -2,9 +2,20 @@
 	min-height: 500px;
 }
 
-#form label.error {
+label.error {
 	color:red;
 }
-#form input.error {
+input.error {
 	border:1px solid red;
+}
+
+
+.success{
+  font-weight: bold;
+  color: green;
+}
+
+.error{
+  font-weight: bold;
+  color: red;
 }

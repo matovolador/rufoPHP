@@ -1,38 +1,28 @@
-<?php require("../_config.php");
-session_start();
-$admin = new Admin();
-if (isset($_SESSION['admin'])){
-  echo "<div class='panel-body'>You are already signed in.</div>";
-}else{
-
-  if (!$admin->superuser_exists()){
-    //RENDER 'create_superuser.php':
-    include("create_superuser.php");
-    exit();
-  }
-
-
-//RENDER LOGIN PAGE:
-?>
-
-
 <div class="panel-body">
 <div class="row">
   <div class="col-sm-0 col-md-4"></div>
   <div class="col-sm-12 col-md-4 text-center">
     <div class="panel panel-primary">
       <div class="panel-heading">
-        Login
+        Create Superuser
       </div>
       <div class="panel-body">
-        <form class="my-form" id="form" action="<?php echo SITE_URL?>actions/admin/login.php" method="post">
+        <form class="" id="form-1" action="<?php echo SITE_URL?>actions/admin/create_superuser.php" method="post">
           <div class="form-group">
             <label for="username">Username: </label>
             <input class="form-control" type="text" name="username" required />
           </div>
           <div class="form-group">
+            <label for="username">Email: </label>
+            <input class="form-control" type="email" name="email" required />
+          </div>
+          <div class="form-group">
             <label for="password">Password: </label>
             <input class="form-control" type="password" name="password" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Repeat Password: </label>
+            <input class="form-control" type="password" name="password_repeat" required />
           </div>
           <input class="btn btn-primary" type="submit" value="Submit" />
         </form>
@@ -43,12 +33,9 @@ if (isset($_SESSION['admin'])){
   <div class="col-sm-0 col-md-4"></div>
 </div>
 </div>
+
 <script type="text/javascript">
 $(document).ready(function(){
-  $("#form").validate();
-});
-
+  $("#form-1").validate();
+})
 </script>
-
-<?php
-} ?>

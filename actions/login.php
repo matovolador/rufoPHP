@@ -15,7 +15,7 @@ if ($res){
 	exit();
 }else{
 	//header("Location :".SITE_URL."<enterbadloginview>");
-	header("Location: ".SITE_URL."/signin");
+	header("Location: ".SITE_URL."signin");
     exit();
 
 }

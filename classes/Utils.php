@@ -1,9 +1,56 @@
 <?php
 
 class Utils{
-  function __construct(){
 
+  /*** USE YOUR OWN ENCRYPTION ***/
+  public static function encryptPassword($password){
+    return md5($password);
   }
+
+
+  public static function passwordStrength($password,$strength_index=0){
+    $isStrong = false;
+    switch ($strength_index){
+      case 0:
+        $isStrong = true;
+        break;
+      case 1:
+        # length >= 8
+        if (strlen($password)>=8) $isStrong = true;
+        break;
+      case 2:
+        # length >= 8
+        # has both numbers and characters
+        if (preg_match('/[A-Za-z]/', $password) && preg_match('/[0-9]/', $password)) $isStrong = true;
+        break;
+      case 3:
+        # length >= 8
+        # has both numbers and characters and a special char (symbols)
+        if (preg_match('/[A-Za-z]/', $password) && preg_match('/[0-9]/', $password) && preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $password)) $isStrong = true;
+        break;
+      default:
+        break;
+    }
+    return $isStrong;
+  }
+
+  public static function passwordStrengthMessage($strength_index){
+    $msg = "";
+    switch($strength_index){
+      case 1:
+        $msg = "Your password must be at least 8 characters long.";
+        break;
+      case 2:
+        $msg = "Your password must be at least 8 characters long, and contain at least one number and one letter.";
+        break;
+      case 3:
+        $msg = "Your password must be at least 8 characters long, contain at least one number and one letter, and at least one special character or symbol.";
+        break;
+    }
+    return $msg;
+  }
+
+
 
   public static function getRandKey($length=8){
       if($length>0){

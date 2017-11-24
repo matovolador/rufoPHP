@@ -33,7 +33,7 @@ class Users extends AbstractMigration
         $table->addColumn('username', 'string')
               ->addColumn('password','string')
               ->addColumn('email','string')
-              ->addColumn('temp_password','string')
+              ->addColumn('temp_password','string',['null'=>true,'default'=>null])
               ->create();
     }
 }

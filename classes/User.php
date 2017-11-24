@@ -7,7 +7,7 @@ class User extends Model {
 	//$args["name"=>x,"pass"=>x,"email"=>x]
   public function createUser ($args){
       $name = $args["name"];
-      $pass = md5($args["pass"]);
+      $pass = Utils::passwordEncrypt($args["pass"]);
       $email = $args["email"];
       $res=$this->db->request("INSERT INTO users (name,password,email) VALUES (?,?,?)","insert",[$name,$pass,$email]);
       return $res;
@@ -17,7 +17,7 @@ class User extends Model {
   //$args["email"=>x,"pass"=>x]
   public function login($args){
       $email=$args["email"];
-      $pass=md5($args["pass"]);
+      $pass=Utils::passwordEncrypt($args["pass"]);
       $res=$this->db->request("SELECT * FROM users WHERE email = ? AND password = ?","select",[$email,$pass],true);
       return $res;
   }
@@ -32,7 +32,7 @@ class User extends Model {
   //TODO make func to log with randkey
 
   public function changePassword($pass){
-      $pass = md5($pass);
+      $pass = Utils::passwordEncrypt($pass);
       $id = $_SESSION['id'];
       $this->db->request("UPDATE users SET temp_password='',password=? WHERE id=?","update",[$pass,$id]);
   }

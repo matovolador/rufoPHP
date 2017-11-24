@@ -1,9 +1,11 @@
 <?php require("../_config.php");
 
 session_start();
-//TESTING:
-$_SESSION['admin'] = true;
-$_SESSION['breadcrumb'] = ["Home","Dashboard"];
+#dev purposes:
+//$_SESSION['admin'] = true;
+
+
+$_SESSION['breadcrumb'] = ["Admin","Dashboard"];
 
 if (!isset($_SESSION['admin'])){
   //Render login

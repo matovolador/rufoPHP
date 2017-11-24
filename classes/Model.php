@@ -5,13 +5,17 @@ class Model{
     $this->db = new PDOdb();
   }
 
-  public function get($table,$id){
-    if (!$this->db->sanitizeTableName($table)) return false;
-    $res = $this->db->request("SELECT * FROM ".$table." WHERE id = ?","select",[$id],true);
+  public function get($table,$params){
+    $clause="";
+    foreach ($params as $key => $value){
+      $clause .= $key." = ? AND ";
+    }
+    $clause = substr($clause,0,-4);
+
+    $res = $this->db->request("SELECT * FROM ".$table." WHERE ".$clause." ","select",array_values($params),true);
     return $res;
 	}
   public function getAll($table,$orderDesc=false){
-    if (!$this->db->sanitizeTableName($table)) return false;
     if ($orderDesc==false){
       $res = $this->db->request("SELECT * FROM ".$table." ","select");
     }else{
@@ -20,33 +24,32 @@ class Model{
     return $res;
   }
   public function create($table,$params){
-    if (!$this->db->sanitizeTableName($table)) return false;
     $keys="";
     $values="";
     foreach ($params as $key => $value){
       $keys .= $key.",";
-      $values="?,";
+      $values.="?,";
     }
     $keys = substr($keys,0,-1);
     $values = substr($values,0,-1);
-    $res = $this->db->request("INSERT INTO ".$table." (".$keys.") VALUES (".$values.")","update",array_values($params));
+    $res = $this->db->request("INSERT INTO ".$table." (".$keys.") VALUES (".$values.")","insert",array_values($params));
     return $res;
   }
   public function delete($table,$id){
-    if (!$this->db->sanitizeTableName($table)) return false;
     $res = $this->db->request("DELETE FROM ".$table." WHERE id=?","delete",[$id]);
     return $res;
   }
   public function set($table,$id,$params){
-    if (!$this->db->sanitizeTableName($table)) return false;
     $updateString="";
     foreach ($params as $key => $value){
-      $updateString = $key."=?,";
+      $updateString .= $key."=?,";
     }
     $updateString = substr($updateString,0,-1);
     $params[]=$id;
     $res = $this->db->request("UPDATE ".$table." SET ".$updateString." WHERE id=?","update",array_values($params));
     return $res;
   }
+
+
 
 }
