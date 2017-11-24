@@ -27,7 +27,6 @@ b - Add Rewrite Engine module to your enabled modules in apache:
 2) Changing settings on `_config.php` file:
 a - You must define `SITE_URL`
 b - You must define MySQL settings: `DB_HOST`,`DB_NAME`,`DB_USER` and `DB_PASS`
-c - Include all your classes in the `_config.php` file.
 
 
 *** LIMITATIONS: Because of the routing settings, POST type forms cannot have "action" set to " ". The way this framework handles POST forms, is by submitting the form to an "action file" inside the "actions" folder, and having that "action file" redirecting to whatever page you desire.
