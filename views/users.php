@@ -30,6 +30,12 @@ if (!isset($_GET['id'])){
 			echo "<p>User by id=".$_GET['id']."not found</p>";
 		}
 
-	} ?>
+	}
+
+	if ($res == false){
+		echo "<p>No users found.</p>";
+	}
+
+	?>
 
 </div>
