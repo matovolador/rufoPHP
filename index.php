@@ -1,7 +1,7 @@
 <?php require("_config.php");
 session_start();
 //ROUTING-----
-$routes = new Routes();
+$routes = new Route();
 //echo $route->getCurrentUri();
 $viewFile = $routes->getView($routes->getCurrentUri());
 //echo $viewFile;
@@ -83,7 +83,9 @@ and open the template in the editor.
     }
     ?>
     <!--Load views in this div -->
-    <div id="main-content"></div>
+    <div id="main-content">
+      <?php include("views/".$viewFile); ?>
+    </div>
     <!-- -->
     <footer>
 		<div class="panel panel-default">
@@ -97,9 +99,7 @@ and open the template in the editor.
 		var viewFile = "<?php echo $viewFile ?>";
 		var mainFile = "";
 		$(document).ready(function(){
-
-			$("#main-content").load(SITE_URL+"views/"+viewFile);
-			pos = viewFile.indexOf("?");
+      pos = viewFile.indexOf("?");
 			cleanFile = viewFile.substr(0,pos);
 			idPos = viewFile.indexOf("=");
 			fileId = viewFile.substr(idPos+1,viewFile.length);

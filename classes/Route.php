@@ -1,5 +1,5 @@
 <?php
-class Routes {
+class Route {
 	public $urls;
 	function __construct($admin=false){
 		if (!$admin){

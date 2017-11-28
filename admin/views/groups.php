@@ -1,0 +1,2 @@
+<?php 
+$groups = new Groups();

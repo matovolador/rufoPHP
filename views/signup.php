@@ -1,4 +1,3 @@
-<?php require("../_config.php"); ?>
 <div class="panel-body">
 	<h3>Sign Up</h3>
 	<form id="form" action="<?php echo SITE_URL ?>actions/register.php" method="post">

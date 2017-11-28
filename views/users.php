@@ -1,4 +1,4 @@
-<?php require("../_config.php");
+<?php
 $users = new User();
 if (!isset($_GET['id'])){
 	$res = $users->getAll("users");

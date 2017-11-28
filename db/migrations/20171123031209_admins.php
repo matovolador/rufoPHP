@@ -31,7 +31,7 @@ class Admins extends AbstractMigration
       // create the table
       $table = $this->table('admins');
       $table->addColumn('username', 'string')
-            ->addColumn('permission_flag','integer')
+            ->addColumn('access_level','integer')
             ->addColumn('group_id','integer',['null'=>true,'default'=>null])
             ->addColumn('password', 'string')
             ->addColumn('email', 'string')

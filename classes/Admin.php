@@ -33,10 +33,7 @@ class Admin extends Model{
     $res=$this->get("admins",$params);
 
     if ($res){
-      session_start();
-      foreach ($res as $key => $value){
-          $_SESSION['admin'][$key]=$value;
-      }
+      Auth::login($res,$params['username'],Admin::SUPERUSER_FLAG);
 
       return true;
     }else{
@@ -44,11 +41,19 @@ class Admin extends Model{
     }
   }
 
+  # @params must contain 'access_level'
   public function createAdmin($params){
     //TODO:
     # check if superuser exists
-    # validate Email
-    # validate password
+    if (!superuser_exists()) return ["error"=>1,"message"=>"Superuser must be set first."];
+
+    if ($params['password']!=$params['password_repeat']) return ['error'=>1,"message"=>"Passwords do not match."];
+    if (!Utils::passwordStrength($params['password'],3)) return ['error'=>1,'message'=>Utils::passwordStrengthMessage(3)];
+    if (!Utils::validateEmail($params['email'])) return ['error'=>1,"message"=>"Invalid email."];
+
+    $res=$this->create("admins",$params);
+    return $res;
+
 
   }
 

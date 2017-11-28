@@ -1,6 +1,5 @@
-<?php require("../_config.php");
+<?php
 
-session_start();
 #dev purposes:
 //$_SESSION['admin'] = true;
 

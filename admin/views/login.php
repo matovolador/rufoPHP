@@ -1,5 +1,4 @@
-<?php require("../_config.php");
-session_start();
+<?php
 $admin = new Admin();
 if (isset($_SESSION['admin'])){
   echo "<div class='panel-body'>You are already signed in.</div>";
@@ -8,10 +7,8 @@ if (isset($_SESSION['admin'])){
   if (!$admin->superuser_exists()){
     //RENDER 'create_superuser.php':
     include("create_superuser.php");
-    exit();
-  }
 
-
+  }else{
 //RENDER LOGIN PAGE:
 ?>
 
@@ -51,4 +48,6 @@ $(document).ready(function(){
 </script>
 
 <?php
-} ?>
+  }
+}
+?>

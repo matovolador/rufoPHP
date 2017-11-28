@@ -8,23 +8,32 @@ class User extends Model {
 		parent::__construct();
 	}
 
-	//$args["name"=>x,"pass"=>x,"email"=>x]
-  public function createUser ($args){
-      $name = $args["name"];
-      $pass = Utils::passwordEncrypt($args["pass"]);
-      $email = $args["email"];
-      $res=$this->db->request("INSERT INTO users (name,password,email) VALUES (?,?,?)","insert",[$name,$pass,$email]);
+	//$params["name"=>x,"pass"=>x,"email"=>x]
+  public function createUser ($params){
+      $name = $params["name"];
+      $pass = Utils::passwordEncrypt($params["pass"]);
+      $email = $params["email"];
+			$res = $this->create("users",$params);
       return $res;
   }
 
 
-  //$args["email"=>x,"pass"=>x]
-  public function login($args){
-      $email=$args["email"];
-      $pass=Utils::passwordEncrypt($args["pass"]);
-      $res=$this->db->request("SELECT * FROM users WHERE email = ? AND password = ?","select",[$email,$pass],true);
-      return $res;
+  //$params["email"=>x,"pass"=>x]
+  public function login($params){
+      $email=$params["email"];
+      $password=Utils::passwordEncrypt($params["pass"]);
+			$res = $this->get("users",["email"=>$email,"password"=>$password]);
+			if ($res){
+				Auth::login($res,$params['username'],0);
+			}
+			return $res;
+
   }
+
+	public function logout(){
+		$res = Auth::logout(["identity_token"=>$_SESSION['identity_token'],"access_level"=>$_SESSION['access_level']]);
+		return $res;
+	}
 
 
   public function setTempPassword($email){
@@ -76,46 +85,27 @@ class User extends Model {
 	}
 
 	public function validateEmail($email){
-		$error = null;
-
-		$flag=filter_var($email, FILTER_VALIDATE_EMAIL);
+		$flag=Utils::validateEmail($email);
 		if ($flag==false){
-			$error = "Email not valid";
-			return $error;
+			return ["error"=>1,"message"=>"Email not valid"];
 		}
 
-		$res = $this->db->request("SELECT * FROM users WHERE email=?","select",[$email]);
+		$res = $this->get("users",["email"=>$email]);
 		if (!empty($res)){
-			$error = "That email is already taken.";
-			return $error;
+			return ["error"=>1,"message"=>"That email is already taken."];
 		}
 
-		return $error;  //IF NULL, EMAIL IS VALID.
+		return true;
 	}
 
 	public function validatePassword($pass) {
-	    $errors = null;
-
-	    if (strlen($pass) < 8) {
-	        $errors[] = "Password too short!";
-	    }
-
-	    if (!preg_match("#[0-9]+#", $pass)) {
-	        $errors[] = "Password must include at least one number!";
-	    }
-
-	    if (!preg_match("#[a-zA-Z]+#", $pass)) {
-	        $errors[] = "Password must include at least one letter!";
-	    }
-
-	    return $errors;
+			if (!Utils::passwordStrength($params['password'],2)) return ['error'=>1,'message'=>Utils::passwordStrengthMessage(2)];
 	}
 
 	public function resetPassword($email){
-		$res = $this->db->request("SELECT * FROM users WHERE email = ?","select",[$email]);
+		$res = $this->get("users",["email"=>$email]);
 		if (!empty($res)){
-			$user = new User();
-			$user->settemp_password($email);
+			$this->setTempPassword($email);
 			return true;
 		}else{
 			return false;
@@ -123,29 +113,23 @@ class User extends Model {
 	}
 
 	public function setNewPassword($pass){
-		if (!checkSession()) return false;
 		if (checkPassword($pass)){
-			$user = new User();
-			$user->changePassword($pass);
+			$this->changePassword($pass);
 			return true;
 		}else{
 			return false;
 		}
 	}
 
-	public function checkSession(){
-		if (isset($_SESSION)) return true;
-		return false;
-	}
 
 	public function getUsers(){
-        $res = $this->db->request("SELECT * FROM users","select");
-        return $res;
+			$res = $this->getAll("users");
+      return $res;
     }
 
     public function getUserById($id){
-        $res = $this->db->request("SELECT * FROM users WHERE id = ?","select",[$id]);
-        return $res;
+			$res = $this->get("users",["id"=>$id]);
+      return $res;
     }
 
 }
