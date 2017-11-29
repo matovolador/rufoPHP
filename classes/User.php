@@ -10,10 +10,11 @@ class User extends Model {
 
 	//$params["name"=>x,"pass"=>x,"email"=>x]
   public function createUser ($params){
-      $name = $params["name"];
-      $pass = Utils::passwordEncrypt($params["pass"]);
+      $name = $params["username"];
+      $pass = Utils::encryptPassword($params["pass"]);
       $email = $params["email"];
-			$res = $this->create("users",$params);
+			$params = ["username"=>$name,"password"=>$pass,"email"=>$email];
+			$res = $this->create("users",$params,"?,?,?");
       return $res;
   }
 
@@ -21,8 +22,8 @@ class User extends Model {
   //$params["email"=>x,"pass"=>x]
   public function login($params){
       $email=$params["email"];
-      $password=Utils::passwordEncrypt($params["pass"]);
-			$res = $this->get("users",["email"=>$email,"password"=>$password]);
+      $password=Utils::encryptPassword($params["pass"]);
+			$res = $this->get("users",["email"=>$email,"password"=>$password],"WHERE email=? AND password=? LIMIT 1");
 			if ($res){
 				Auth::login($res,$params['username'],0);
 			}
@@ -38,25 +39,26 @@ class User extends Model {
 
   public function setTempPassword($email){
       $temp_password=$this->randKey();
-      $this->db->request("UPDATE users SET temp_password=?,password=? WHERE email='$email'","update",[$temp_password,$temp_password]);
+			$res=$this->set("users",["temp_password"=>$temp_password,"password"=>$temp_password],"SET temp_password=?, password=?",["email"=>$email],"WHERE email=?");
+
       //TODO SEND EMAIL WITH temp_password
   }
 
   //TODO make func to log with randkey
 
   public function changePassword($pass){
-      $pass = Utils::passwordEncrypt($pass);
+      $pass = Utils::encryptPassword($pass);
       $id = $_SESSION['id'];
-      $this->db->request("UPDATE users SET temp_password='',password=? WHERE id=?","update",[$pass,$id]);
+			$res=$this->set("users",["password"=>$pass],"SET temp_password='',password=?",['id'=>$id],"WHERE id=?");
   }
 
 
   public function randKey(){
       $randKey=Utils::getRandKey();
-      $res=$this->request("SELECT * FROM users WHERE (password=$randKey OR temp_password=$randKey)","select");
+			$res=$this->get("users",['password'=>$randKey,"temp_password"=>$randKey],"WHERE (password=? OR temp_password=?)");
       while(!empty($res)){
           $randKey=Utils::getRandKey();
-          $res=$this->request("SELECT * FROM users WHERE (password=$randKey OR temp_password=$randKey)","select");
+          $res=$this->get("users",['password'=>$randKey,"temp_password"=>$randKey],"WHERE (password=? OR temp_password=?)");
       }
       return $randKey;
   }
@@ -65,7 +67,7 @@ class User extends Model {
 
 	public function validateUserName($name){
 		$error = null;
-		$res = $this->db->request("SELECT * FROM users WHERE username=?","select",[$name]);
+		$res = $this->get("users",["username"=>$username], "WHERE username=? LIMIT 1");
 		if (!empty($res)){
 			$error = "That name is already taken.";
 			return $error;
@@ -90,7 +92,7 @@ class User extends Model {
 			return ["error"=>1,"message"=>"Email not valid"];
 		}
 
-		$res = $this->get("users",["email"=>$email]);
+		$res = $this->get("users",["email"=>$email], "WHERE email=? LIMIT 1");
 		if (!empty($res)){
 			return ["error"=>1,"message"=>"That email is already taken."];
 		}
@@ -103,7 +105,7 @@ class User extends Model {
 	}
 
 	public function resetPassword($email){
-		$res = $this->get("users",["email"=>$email]);
+		$res = $this->get("users",["email"=>$email], "WHERE email=? LIMIT 1");
 		if (!empty($res)){
 			$this->setTempPassword($email);
 			return true;
@@ -123,14 +125,14 @@ class User extends Model {
 
 
 	public function getUsers(){
-			$res = $this->getAll("users");
-      return $res;
-    }
+		$res = $this->get("users");
+    return $res;
+  }
 
-    public function getUserById($id){
-			$res = $this->get("users",["id"=>$id]);
-      return $res;
-    }
+  public function getUserById($id){
+		$res = $this->get("users",["id"=>$id],"WHERE id=? LIMIT 1");
+    return $res;
+  }
 
 }
 

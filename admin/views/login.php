@@ -5,6 +5,7 @@ if (isset($_SESSION['admin'])){
 }else{
 
   if (!$admin->superuser_exists()){
+    $_SESSION['messages'] = ['status'=> "error","message"=>"You must first create a superuser."];
     //RENDER 'create_superuser.php':
     include("create_superuser.php");
 

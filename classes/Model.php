@@ -4,15 +4,8 @@ class Model{
   function __construct(){
     $this->db = new PDOdb();
   }
-
-  public function get($table,$params){
-    $clause="";
-    foreach ($params as $key => $value){
-      $clause .= $key." = ? AND ";
-    }
-    $clause = substr($clause,0,-4);
-
-    $res = $this->db->request("SELECT * FROM ".$table." WHERE ".$clause." ","select",array_values($params),true);
+  public function get($table,$params=false,$where_clause=false){
+    $res = $this->db->request("SELECT * FROM ".$table." ".$where_clause." ","select",array_values($params),true);
     return $res;
 	}
   public function getAll($table,$orderDesc=false){
@@ -27,29 +20,19 @@ class Model{
     $keys="";
     $values="";
     foreach ($params as $key => $value){
-      $keys .= $key.",";
       $values.="?,";
     }
     $keys = substr($keys,0,-1);
     $values = substr($values,0,-1);
-    $res = $this->db->request("INSERT INTO ".$table." (".$keys.") VALUES (".$values.")","insert",array_values($params));
+    $res = $this->db->request("INSERT INTO ".$table." (".$request.") VALUES (".$values.")","insert",array_values($params));
     return $res;
   }
-  public function delete($table,$id){
-    $res = $this->db->request("DELETE FROM ".$table." WHERE id=?","delete",[$id]);
+  public function delete($table,$params,$where_clause){
+    $res = $this->db->request("DELETE FROM ".$table." ".$where_clause." ","delete",array_values($params));
     return $res;
   }
-  public function set($table,$id,$params){
-    $updateString="";
-    foreach ($params as $key => $value){
-      $updateString .= $key."=?,";
-    }
-    $updateString = substr($updateString,0,-1);
-    $params[]=$id;
-    $res = $this->db->request("UPDATE ".$table." SET ".$updateString." WHERE id=?","update",array_values($params));
+  public function set($table,$params,$set_clause,$where_clause=false,$where_params=false){
+    $res = $this->db->request("UPDATE ".$table." ".$set_string." ".$where_clause." ","update",array_merge(array_values($params),array_values($where_params)));
     return $res;
   }
-
-
-
 }

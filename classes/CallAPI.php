@@ -1,9 +1,9 @@
 <?php
-class CallAPI{
+class CallAPI {
 	function __construct(){
 
 	}
-	function call($method, $url, $data = false)
+	public function call($method, $url, $data = false)
 	{
 	    $curl = curl_init();
 
