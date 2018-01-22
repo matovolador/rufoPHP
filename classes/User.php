@@ -13,6 +13,7 @@ class User extends Model {
       $name = $params["username"];
       $pass = Utils::encryptPassword($params["pass"]);
       $email = $params["email"];
+			if (!$this->validateEmail($email)) return ["error"=>1,"message"=>"That email is already taken."];
 			$params = ["username"=>$name,"password"=>$pass,"email"=>$email];
 			$res = $this->create("users",$params,"?,?,?");
       return $res;
@@ -26,8 +27,9 @@ class User extends Model {
 			$res = $this->get("users",["email"=>$email,"password"=>$password],"WHERE email=? AND password=? LIMIT 1");
 			if ($res){
 				Auth::login($res,$params['username'],0);
+				return true;
 			}
-			return $res;
+			return false;
 
   }
 
