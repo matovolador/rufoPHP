@@ -1,7 +1,6 @@
 # rufoPHP v0.9.0
 Small PHP Framework to act as a quick web project startup.
 This software is released under the MIT license.
-If you like this software, consider making a donation to this Bitcoin address: 1NWetH6goP78i3YT7V9f36kvwzNc2JNzNs
 
 FEATURES:
 1) routing
